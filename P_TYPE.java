@@ -15,6 +15,9 @@ public class P_TYPE{
  public Integer getId(){
      return id; 
  }
+ public void setID(Integer id ){
+     this.id = id; 
+ }
  public String getName(){
   return name; 
  }
@@ -79,8 +82,7 @@ public class P_TYPE{
      }
  }
  //create a function to return a list of all types in MashMap
-
- public HashMap<String, Integer> getTypesMap() {
+ public HashMap<String, Integer> getTypeMap() {
         Statement st;
         ResultSet rs;
         HashMap<String, Integer> map = new HashMap<>();
@@ -99,5 +101,31 @@ public class P_TYPE{
 
         return map;
     }
+ 
+ //create a fucntion to get a type data by id 
+ //we can use the function getTypeMapoo  to get the id and the name 
+ // but we want the discription t
+public P_TYPE getTypeById(Integer id) {
+    PreparedStatement ps;
+    ResultSet rs;
+    P_TYPE type = new P_TYPE(); 
+    try {
+        ps = THE_CONNECTION.getTheConnection().prepareStatement("SELECT * FROM property_type WHERE id = ?");
+        ps.setInt(1, id); 
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            type.setID(id);
+            type.setName(rs.getString("name"));
+            type.setDescription(rs.getString("description"));
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(P_TYPE.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return type; 
+}
 
+    String getDescription(Integer typeId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+         
 }
